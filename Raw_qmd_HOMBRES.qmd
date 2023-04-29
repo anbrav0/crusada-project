@@ -1,0 +1,205 @@
+---
+title: "HOMBRES Youth Data"
+author: "Weize Wang, Ana Bravo"
+format: pdf
+editor: visual
+---
+
+```{r}
+#| label: load-packages
+#| code-summary: "packages"
+#| message: false
+
+
+library(haven)
+library(gt)
+library(gtsummary)
+library(tidyverse)
+
+```
+
+```{r}
+#| label: data-import
+#| message: false
+#| echo: false
+
+copy_clean_HOMBRES_Y <- read_csv("/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/HOMBRES_Y_clean_copy.csv")
+```
+
+```{r}
+#| label: table-summary
+#| tbl-cap: Summary of HOMBRES Youth Data Variables
+#| message: false
+#| echo: false
+
+### table prep ##### 
+
+table_1 <- 
+  list(
+    "tbl_summary-str:default_con_type" = "continuous2",
+    "tbl_summary-str:continuous_stat" = c(
+      "{median} ({p25} - {p75})",
+      "{mean} ({sd})",
+      "{min} - {max}"
+  ),
+  
+  "tbl_summary-str:categorical_stat" = "({p}%)",
+    "style_number-arg:big.mark" = "",
+    "tbl_summary-fn:percent_fun" = function(x) style_percent(x, digits = 1)
+  )
+
+
+
+# subset for table #####
+
+table_subset <- copy_clean_HOMBRES_Y %>% 
+  select(
+    Redcap_event_name, Language_pref, Total_household_n, Currently_in_school, MACV_RSP, MACV_REL, Machismo_SS,
+    Caballerismo_SS, HSI_Y, FES_COFLT, FES_RELIG, FES_CONTROL, BAS_Americanism, BAS_Hispanicism,  SemiRural_or_urban, Parent_marital_status, Pastmonth_total_income, Group
+  )
+
+
+
+table_subset_2 <- table_subset %>% 
+  mutate(Redcap_event_name = case_when(
+    Redcap_event_name == "first_interview_arm_1" ~ "Baseline",
+    Redcap_event_name == "second_post_interv_arm_1" ~ "6 month follow-up"
+  )) %>% 
+  mutate(Language_pref = case_when(
+    Language_pref == "1" ~ "English",
+    Language_pref == "2" ~ "Spanish",
+    Language_pref == "3" ~ "Other"
+  )) %>% 
+  mutate(SemiRural_or_urban = case_when(
+    SemiRural_or_urban == "1" ~ "Semi-rural",
+    SemiRural_or_urban == "2" ~ "Urban"
+  )) %>% 
+  mutate(Pastmonth_total_income = case_when(
+    Pastmonth_total_income == "1" ~ "0 - $999",
+    Pastmonth_total_income == "2" ~ "$1,000 - $1,999",
+    Pastmonth_total_income == "3" ~ "$2,000 or more"
+  )) %>% 
+  mutate(Group = case_when(
+    Group == "I" ~ "Intervetion",
+    Group == "C" ~ "Control"
+  )) 
+
+
+
+  
+## table ####
+
+gtsummary::set_gtsummary_theme(table_1)
+
+
+table_subset_2 %>% 
+  gtsummary::tbl_summary(
+    by = Redcap_event_name,
+    list(
+      Language_pref ~ "Language Preference",
+      Total_household_n ~ "Total household individuals",
+      Currently_in_school ~ "Currently in school",
+      MACV_RSP ~ "Respect subscale score",
+      MACV_REL ~ "Religion score",
+      Machismo_SS ~ "Machismo score",
+      Caballerismo_SS ~ "Caballerismo score",
+      HSI_Y ~ "Adolescent Hispanic stress score",
+      FES_COFLT ~ "FES conflict score",
+      FES_RELIG ~ "Moral religion score",
+      FES_CONTROL ~"FES control score",
+      BAS_Americanism ~ "Americanism score",
+      BAS_Hispanicism ~ "Hispanicism score",
+      SemiRural_or_urban ~ "Semi-rural or Urban",
+      Parent_marital_status ~ "Parent marital status",
+      Pastmonth_total_income ~ "Past month income"
+    )
+  ) %>% 
+  bold_labels() %>% 
+  modify_header(label ~ "")
+
+
+
+#### table 2 modification of vairables ########
+
+table_subset_2 <- table_subset %>% 
+  mutate(Redcap_event_name = case_when(
+    Redcap_event_name == "first_interview_arm_1" ~ "Baseline",
+    Redcap_event_name == "second_post_interv_arm_1" ~ "6 month follow-up"
+  )) %>% 
+  mutate(Language_pref = case_when(
+    Language_pref == "1" ~ "English",
+    Language_pref == "2" ~ "Spanish",
+    Language_pref == "3" ~ "Other"
+  )) %>% 
+  mutate(SemiRural_or_urban = case_when(
+    SemiRural_or_urban == "1" ~ "Semi-rural",
+    SemiRural_or_urban == "2" ~ "Urban"
+  )) %>% 
+  mutate(Pastmonth_total_income = case_when(
+    Pastmonth_total_income == "1" ~ "0 - $999",
+    Pastmonth_total_income == "2" ~ "$1,000 - $1,999",
+    Pastmonth_total_income == "3" ~ "$2,000 or more"
+  ))
+
+  
+```
+
+```{r}
+#| label: table-summary-2
+#| tbl-cap: Summary of HOMBRES Youth Data Demographic
+#| message: false
+#| echo: false
+
+
+### table prep ####
+table_2 <- 
+  list(
+    "tbl_summary-str:default_con_type" = "continuous2",
+    "tbl_summary-str:continuous_stat" = c(
+      "{median} ({p25} - {p75})",
+      "{mean} ({sd})",
+      "{min} - {max}"
+  ),
+  
+  "tbl_summary-str:categorical_stat" = "({p}%)",
+    "style_number-arg:big.mark" = "",
+    "tbl_summary-fn:percent_fun" = function(x) style_percent(x, digits = 1)
+  )
+
+
+## subset prep #### 
+HOMBRES_with_demographic <- table_subset_2 %>% 
+  filter(Redcap_event_name == "Baseline") %>% 
+  select(
+    Language_pref,
+    Total_household_n, 
+    Currently_in_school, 
+    SemiRural_or_urban, 
+    Parent_marital_status,
+    Pastmonth_total_income,
+    Group
+  )
+
+
+
+gtsummary::set_gtsummary_theme(table_2)
+
+
+HOMBRES_with_demographic %>% 
+  tbl_summary(by = Group,
+    list(
+      Language_pref ~ "Language Preference",
+      Total_household_n ~ "Total household individuals",
+      Currently_in_school ~ "Currently in school",
+      SemiRural_or_urban ~ "Semi-rural or Urban",
+      Parent_marital_status ~ "Parent marital status",
+      Pastmonth_total_income ~ "Past month income",
+      Group ~ "Group"
+    )
+  ) %>% 
+  bold_labels() %>% 
+  modify_header(label ~ "")
+
+
+
+```
