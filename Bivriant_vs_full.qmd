@@ -1,0 +1,933 @@
+---
+title: "HOMBRES Youth Summary Analysis of Results"
+date: 2023-03-15
+author: Ana Bravo
+format: pdf
+editor: visual
+---
+
+## Packages Used
+
+```{r}
+#| label: load-packages
+#| code-summary: "packages"
+#| message: false
+
+library(haven)
+library(gt)
+library(gtsummary)
+library(flextable)
+library(moments)
+library(tidyverse)
+
+
+```
+
+```{r}
+#| label: upload-data
+#| code-summary: "data"
+#| message: false
+#| echo: false
+
+
+Father_Youth_second_subset <- read_csv("/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/Father_Youth_second_subset.csv")
+
+
+```
+
+\newpage
+
++-----------------------------------+---------------+---------------+----------------+----------------+
+|                                   | **Bivariant** | **Bivariant** | **Full Model** | **Full Model** |
+|                                   |               |               |                |                |
+|                                   | Parameters    | P-value       | Parameters     | P-value        |
++===================================+:=============:+:=============:+:==============:+:==============:+
+| Time                              | 0.03259       | 0.6498        | 0.0500         | 0.4215         |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Parent Marital Status**         |               |               |                |                |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| In a domestic relationship        | 0.2871        | 0.0561        | | 0.3778       | **0.0083\      |
+|                                   |               |               |                | **\*\*\*       |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| Married                           | 0.0994        | 0.3773        | 0.2392         | **0.0306**\    |
+|                                   |               |               |                | **\*\*\***     |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| Age                               | 0.01913       | 0.2764        | 0.0005         | 0.9756         |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Urban vs. semi-urban**          |               |               |                |                |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| Rural                             | 0.220         | **0.0021**    | 0.030          | 0.7195         |
+|                                   |               |               |                |                |
+|                                   |               | **\*\*\***    |                |                |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Total people in the household** | 0.0571        | **0.0241**    | 0.0101         | 0.6772         |
+|                                   |               |               |                |                |
+|                                   |               | **\*\*\*\***  |                |                |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Past Month total Income**       |               |               |                |                |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| 0 - \$999                         | 0.043         | 0.67          | -0.0130        | 0.890          |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| \$1,000 - \$1,999                 | 0.161         | **0.0439**    | 0.190          | **0.013**      |
+|                                   |               |               |                |                |
+|                                   |               | **\*\*\***    |                | **\*\*\***     |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Language preference**           |               |               |                |                |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| English                           | 0.263         | 0.335         | --             | --             |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| Spanish                           | -0.03         | 0.897         | --             | --             |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Machismo**                      | 0.105         | **0.003**     | 0.062          | 0.066          |
+|                                   |               |               |                |                |
+|                                   |               | **\*\*\*\***  |                |                |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Caballerismo**                  | 0.088         | **0.046**     | 0.158          | **0.0006**     |
+|                                   |               |               |                |                |
+|                                   |               | **\*\*\***    |                | **\*\*\***     |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Family Conflict**               | 0.072         | **0.001**     | 0.063          | **0.006**      |
+|                                   |               |               |                |                |
+|                                   |               | **\*\*\***    |                | **\*\*\***     |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Family Religiosity**            | 0.052         | **0.003**     | 0.055          | **0.004**      |
+|                                   |               |               |                |                |
+|                                   |               | **\*\*\***    |                | **\*\*\***     |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Family Control**                | 0.092         | **\< .0001**  | 0.071          | **0.0003**     |
+|                                   |               |               |                |                |
+|                                   |               | **\*\*\***    |                | **\*\*\***     |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Americanism**                   | 0.071         | 0.237         | -0.166         | **0.015**      |
+|                                   |               |               |                |                |
+|                                   |               |               |                | **\*\*\***     |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Hispanicism**                   | -0.153        | 0.001         | -0.137         | **0.026**      |
+|                                   |               |               |                |                |
+|                                   |               |               |                | **\*\*\***     |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **U.S. Born**                     |               |               |                |                |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| Yes                               | 0.262         | **0.0002**    | 0.238          | **0.014**      |
+|                                   |               |               |                |                |
+|                                   |               | **\*\*\***    |                | **\*\*\***     |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **MACV RSP**                      | -0.08         | 0.095         | -0.175         | **0.002**      |
+|                                   |               |               |                |                |
+|                                   |               |               |                | **\*\*\***     |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **MACV REL**                      | 0.030         | 0.35          | --             | --             |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Father Drinking Frequency**     | 0.0006        | 0.78          | --             | --             |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Father Drinking Quantity**      | -0.015        | 0.156         | --             | --             |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Father Binge Drink**            | 0.136         | 0.064         | --             | --             |
++-----------------------------------+---------------+---------------+----------------+----------------+
+| **Father Years in the U.S.**      | 0.0067        | **0.016**     | -0.005         | 0.20           |
+|                                   |               |               |                |                |
+|                                   |               | **\*\*\***    |                |                |
++-----------------------------------+---------------+---------------+----------------+----------------+
+
+: Bivariant versus Full model Fit {#tbl-first}
+
+## Parameter solutions for HOMBRES Youth Data
+
+### 
+
+![Brief overview of final model](images/Screen%20Shot%202023-03-09%20at%2010.06.50%20AM.png){fig-align="center"}
+
+### Just a brief reminder about the bivariant analysis:
+
+**HSI_Y and time**, there was no significant differences. This was expected as this is more of a cohort approach.
+
+HSI_Y and Parent marital status: No significant association between HSI_Y and parent marital status.
+
+HSI_Y and age: no significant association between HSI_Y and age but it is important to probably keep age in the model so we control for this.
+
+HSI_Y and semi-rural /urban: those in the semi rural group reported higher levels of stress than those in the urban group.
+
+HSI_Y and people in the household was significantly associated with hispanic stress.
+
+HSI_Y and household income: type 3 F test was not significant so this may not be a good model fit, however some parameters were significant see below:
+
+![](images/Screen%20Shot%202023-03-09%20at%2010.21.11%20AM.png){fig-align="center"}
+
+### father drinking habits
+
+We also looked at youth stress and father drinking habits. exploratory analysis suggested that drinking frequency, drinking quantity and binge drinking was not significantly associated with youth Hispanic stress however, this may be reason to due power.
+
+### code that was used to run the final model
+
+![](images/Screen%20Shot%202023-03-09%20at%2010.25.02%20AM-01.png){fig-align="center"}
+
+# Descriptive analysis of variables of interest
+
+<b></b>
+
+```{r}
+#| label: descriptive-table
+#| message: false
+#| echo: false
+#| output: false
+
+
+Descriptive_table <- Father_Youth_second_subset %>% 
+  select(-Redcap_event_name, -Participant_ID, -Time, -Father_or_son, -Group) %>% 
+  select(Years_in_US_notborn_F, Current_Age_F, Born_in_US_F, Drink_Freq_F, 
+         Drink_Quant_F,Binge_Drinker_F, HSI_Y, everything()
+         ) %>% 
+  head(10) %>% 
+  gt() %>% 
+  cols_label(
+    HSI_Y = "Hispanic Stress Inventory",
+    Years_in_US_notborn_F = "Father's Years in the U.S.",
+    Current_Age_F = "Father's current age",
+    Born_in_US_F = "Father U.S. born?", 
+    Drink_Freq_F = "Father's Past 90 days alcohol consumption",
+    Drink_Quant_F = "Father's average # of drinkings in one day",
+    Binge_Drinker_F = "Father Binge drinker status?",
+    Language_pref = "Youth Language preference",
+    Currently_in_school = "Youth Currently in School?",
+    US_born = "Youth U.S. born?",
+    MACV_RSP = "MACV RSP",
+    MACV_REL = "MACV REL",
+    Machismo_SS = "Machismo Score",
+    Caballerismo_SS = "Caballerismo Score",
+    FES_COFLT = "Family Conflict",
+    FES_RELIG = "Family Religiosity",
+    FES_CONTROL = "Family Control",
+    BAS_Americanism = "Americanism",
+    BAS_Hispanicism = "Hispanicism",
+    SemiRural_or_urban = "Semi-rural or Urban",
+    Parent_marital_status = "Parent Marital Status",
+    Pastmonth_total_income = "Past month total money family lived on",
+    numeric_age = "Youth Age",
+    numeric_total_household = "Total number of people in the household",
+    numeric_current_grade = "Youth current grade"
+    ) %>% 
+  
+  tab_spanner(
+    label = md("**Father**"),
+    columns = 1:6
+  ) %>% 
+  
+  tab_spanner(
+    label = md("**Youth**"),
+    columns = 7:25
+  ) %>% 
+  
+  tab_options(
+    table.width = pct(5)
+  )
+
+
+Descriptive_table %>% as_raw_html()
+
+```
+
+```{r}
+#| echo: false
+
+# ---mean---;
+mean <- Father_Youth_second_subset %>% 
+  summarise(
+    across(c(HSI_Y, BAS_Americanism, MACV_RSP, MACV_REL, Machismo_SS, Caballerismo_SS, FES_COFLT, FES_RELIG, FES_CONTROL, BAS_Americanism, BAS_Hispanicism, numeric_age, numeric_total_household, numeric_current_grade), ~ mean(.x, na.rm = TRUE))
+  ) 
+
+#---SD ----;
+SD <- Father_Youth_second_subset %>% 
+  summarise(
+    across(c(HSI_Y, BAS_Americanism, MACV_RSP, MACV_REL, Machismo_SS, Caballerismo_SS, FES_COFLT, FES_RELIG, FES_CONTROL, BAS_Americanism, BAS_Hispanicism, numeric_age, numeric_total_household, numeric_current_grade), ~ sd(.x, na.rm = TRUE))
+  ) 
+
+
+# --variance --;
+variance <- Father_Youth_second_subset %>% 
+  summarise(
+    across(c(HSI_Y, BAS_Americanism, MACV_RSP, MACV_REL, Machismo_SS, Caballerismo_SS, FES_COFLT, FES_RELIG, FES_CONTROL, BAS_Americanism, BAS_Hispanicism, numeric_age, numeric_total_household, numeric_current_grade), ~ var(.x, na.rm = TRUE))
+  ) 
+
+#---minimum ---;
+min <- Father_Youth_second_subset %>% 
+  summarise(
+    across(c(HSI_Y, BAS_Americanism, MACV_RSP, MACV_REL, Machismo_SS, Caballerismo_SS, FES_COFLT, FES_RELIG, FES_CONTROL, BAS_Americanism, BAS_Hispanicism, numeric_age, numeric_total_household, numeric_current_grade), ~ min(.x, na.rm = TRUE))
+  ) 
+
+
+#-- maximum ----;
+max <- Father_Youth_second_subset %>% 
+  summarise(
+    across(c(HSI_Y, BAS_Americanism, MACV_RSP, MACV_REL, Machismo_SS, Caballerismo_SS, FES_COFLT, FES_RELIG, FES_CONTROL, BAS_Americanism, BAS_Hispanicism, numeric_age, numeric_total_household, numeric_current_grade), ~ max(.x, na.rm = TRUE))
+  ) 
+
+
+
+skewness <- Father_Youth_second_subset %>% 
+  summarise(
+    across(c(HSI_Y, BAS_Americanism, MACV_RSP, MACV_REL, Machismo_SS, Caballerismo_SS, FES_COFLT, FES_RELIG, FES_CONTROL, BAS_Americanism, BAS_Hispanicism, numeric_age, numeric_total_household, numeric_current_grade), ~ skewness(.x, na.rm = TRUE))
+  ) %>% view()
+
+
+
+#-- pivot longer in prep for compbinding tables ---;
+
+
+# mean long ---- 
+mean_long <- mean %>% 
+  pivot_longer(
+    cols = HSI_Y:numeric_current_grade,
+    names_to = "variables",
+    values_to = "Mean" 
+  ) %>% 
+  view()
+
+#max long --- 
+max_long <- max %>% 
+  pivot_longer(
+    cols = HSI_Y:numeric_current_grade,
+    names_to = "variables",
+    values_to = "Max" 
+  ) %>% 
+   view()
+
+#min long ----
+
+min_long <- min %>% 
+  pivot_longer(
+    cols = HSI_Y:numeric_current_grade,
+    names_to = "variables",
+    values_to = "Min" 
+  ) %>% 
+   view()
+
+# SD long -----; 
+
+SD_long <- SD %>% 
+  pivot_longer(
+    cols = HSI_Y:numeric_current_grade,
+    names_to = "variables",
+    values_to = "SD" 
+  ) %>% 
+   view()
+
+# variance long ---;
+
+variance_long <- variance %>% 
+  pivot_longer(
+    cols = HSI_Y:numeric_current_grade,
+    names_to = "variables",
+    values_to = "Variance" 
+  ) %>% 
+   view()
+
+
+# skewness long -----
+skewness_long <- skewness %>% 
+  pivot_longer(
+    cols = HSI_Y:numeric_current_grade,
+    names_to = "variables",
+    values_to = "Skewness" 
+  ) %>% 
+   view()
+
+# joining all tables to create one ----;
+
+Table_1 <- 
+  left_join(mean_long, SD_long, by = "variables") %>% 
+  left_join(variance_long, by = "variables") %>% 
+  left_join(min_long, by = "variables") %>% 
+  left_join(max_long, by = "variables") %>% 
+  left_join(skewness_long, by = "variables") %>% 
+  rename(Variables = variables)
+
+
+
+```
+
+```{r}
+#| echo: false
+
+Table_1 %>% 
+  flextable() %>% 
+  theme_booktabs(bold_header = TRUE) %>% 
+  colformat_double(digits = 2) %>% 
+  set_caption(
+    caption = "Summary Statistics of variables in HOMBRES Youth Data"
+  ) %>% 
+  
+  footnote(
+    i = 1,
+    j = 1,
+    ref_symbols = "1",
+    value = as_paragraph("Adolescent Hispanic Stress: Mean Score")
+  ) %>% 
+  
+  footnote(
+    i = 2,
+    j = 1,
+    ref_symbols = "2",
+    value = as_paragraph("Bidimensional Acculturation Americanism Score")
+  ) %>% 
+  
+  footnote(
+    i = 3,
+    j = 1, 
+    ref_symbols = "3",
+    value = as_paragraph("MACV Respect subscale")
+  ) %>% 
+  
+  footnote(
+    i = 4, 
+    j = 1, 
+    ref_symbols = "4",
+    value = as_paragraph("MACV Religion subscale")
+  ) %>% 
+  
+autofit()
+  
+ 
+
+  
+
+```
+
+\newpage
+
+```{r}
+#| echo: false
+
+#parent marital status --------
+Parent_marital_only <- Father_Youth_second_subset %>% 
+  count(Parent_marital_status) %>% 
+  rename(`Parent marital status` = Parent_marital_status)
+
+
+Parent_marital_only %>% 
+  flextable() %>% 
+  autofit()
+
+
+```
+
+Parent marital distribution seems to be more heavily swayed towards the participants parents being married , and then in a domestic relationship and then single or separated.
+
+<b></b>
+
+```{r}
+#| echo: false
+
+
+#Language preferrence ----------
+Language_preference_only <- Father_Youth_second_subset %>% 
+  count(Language_pref) %>% 
+  mutate(Language_pref = case_when(
+    Language_pref == 1 ~ "English", 
+    Language_pref == 2 ~ "Spanish",
+    Language_pref == 3 ~ "Other",
+  )) %>% 
+  rename(`Language Preference` = Language_pref)
+    
+
+Language_preference_only %>% 
+  flextable() %>% 
+  autofit()
+
+```
+
+Many of the participants seem to have a preference for English. Also, keep in mind that the study took two times points (base line event and 6 month follow up) therefore, these values are roughly split into half.
+
+```{r}
+#| echo: false
+
+Past_month_only <- Father_Youth_second_subset %>% 
+  count(Pastmonth_total_income) %>% 
+  mutate(Pastmonth_total_income = case_when(
+    Pastmonth_total_income == 1 ~ "0 - $999",
+    Pastmonth_total_income == 2 ~ "$1,000 - $1,999",
+    Pastmonth_total_income == 3 ~ "$2,000 or more"
+  )) %>% 
+  
+
+  rename(
+    `Past month total amount of money lived on` = Pastmonth_total_income
+  ) 
+
+
+
+Past_month_only %>% 
+  flextable() %>% 
+  colformat_char(na_str = "Unknown") %>% 
+  autofit()
+  
+```
+
+It is important to distinguish the question that was asked to the participants during data collection. For Past month income, the question asked in the questionnaire was "In the past month, what was the total amount of money you and your family lived on including public assistance?" additionally, this question was asked from the father survey instead of the youth.
+
+```{r}
+#| echo: false
+
+# turning final father/youth data wide:
+
+
+Fathers_Youth_wide <- Father_Youth_second_subset %>% 
+  select(-Time) %>% 
+  pivot_wider(
+    names_from = Redcap_event_name,
+    values_from = c(HSI_Y, Years_in_US_notborn_F, Current_Age_F, Born_in_US_F, Drink_Freq_F, Drink_Quant_F, Binge_Drinker_F, Language_pref, Currently_in_school, US_born, MACV_RSP, MACV_REL, Machismo_SS, Caballerismo_SS, FES_COFLT, FES_RELIG, FES_CONTROL, BAS_Americanism,BAS_Hispanicism, SemiRural_or_urban, Group , Parent_marital_status, Pastmonth_total_income,numeric_age, numeric_total_household , Father_or_son, numeric_current_grade))
+
+
+# writing father/youth wide data set 
+
+write_csv(x = Fathers_Youth_wide,
+          file = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/Father_Youth_new_wide.csv")
+
+
+
+
+```
+
+\newpage
+
+# Background
+
+Stress related factors among adolescents in the United States (U.S.) has been associated with later development of chronic disease, cardiovascular disorders, and psychological distress [(Roemmich. et al 2014)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6459183/#R29). Recent trends suggested that between 2016 and 2020, there were significant increases in anxiety and depression symptoms, and a decrease in preventative medical care visits in pediatric populations [(Lebrun-Harris, Ghandour, Kogan & Warren, 2022)](https://jamanetwork.com/journals/jamapediatrics/fullarticle/2789946?guestAccessKey=41fde697-e79f-411c-bed3-743faeb63055&utm_campaign=enews20220317&utm_content=tfl&utm_medium=email&utm_source=govdelivery&utm_term=031422). Although adolescents across the U.S. experience differing levels of stress and stress related problems, Latinx youth seem to be more at-risk for mood disorders such as anxiety and depression as well as being at risk for notably higher rates of alcohol use [(Boyas, Villarreal-Otalora & Marsiglia, 2019).](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6824262/#R51) In light of all these findings, there is still a need for research to explore the different facets of Latinx adolescent stress because follow up of Latinx youth into adulthood is still lacking and not very well understood.
+
+# Latinx Youth Population Importance
+
+According to the Youth Risk Behavior Survey Summary (YRBSS) trend for 2021, 46% of Hispanic youth reported experiencing persistent feeling of sadness or hoplessness in the past year. Additionally, the percent of Black, Hispanic, and White students who seriously considered attempting suicide increased from 2011 to 2021. [(CDC summary trends 2023)](https://www.cdc.gov/healthyyouth/data/yrbs/pdf/yrbs_data-summary-trends_report2023_508.pdf) Latinx youth navigate a unique set of stress related factors such and acculterative stress, bilingulism, and perceived discrimination. [(Cano et al., 2015).](https://onlinelibrary.wiley.com/doi/10.1016/j.adolescence.2015.03.017) Primary studies on Latinx youth document the gender norms, familialism, and urban environment have been associated with stress related factors among Latinx youth. [(Cervantes, R.C. & Cordova, D. 2011).](https://onlinelibrary.wiley.com/doi/epdf/10.1002/jcop.20436?saml_referrer) Yet, the influence on these factors among adolescent sons of South and Central Americans is still not widely known. This present study investigates stress related factors among a diverse sample of Latinx youth living in Miami-Dade County (MDC).
+
+# Methods
+
+This study is a continuation of the National Institutes of Health (NIH) funded HOMBRES community based clinical study interested in evaluating the effectiveness of evidence-based intervention working with Latinx seasonal farm workers and their adolescent sons in Miami-Dade County. Father participants were recruited using printed fliers, during community meetings, and social media advertisement and were asked to answer a series of questionnaires alongside their teen sons via survey link that can be administered via phone, computer, or iPad tablet. Information from the youth sampled 122 male participants at baseline aged ranged from 11-17 (Mean = 14 , SD = 2).
+
+From the father data, most participants were from Venezuela (25%) and the second largest group was from Mexico (22%). The eligibility criteria to participate in the youth portion was 1. be the adolescent son of the father figure participating in the study 2. self-identifying Latinx assenting to participate and 3. living or working in Miami-Dade County. Questionnaire data was collected using REDCap survey software and was administered in Spanish or were translated into Spanish via back translation methods approved by the Institutional Review Board.
+
+# Measures
+
+### Demographic Variables
+
+the following demographic variables were included: age, parent marital status, living in urban/semi-rural areas, the number of people residing in the home, U.S. birth status and household income, current grade and weather on not adolescent identified as being currently in school on a dichotomous scale (yes/no). Additionally, amount of time father's resided in the U.S. was also included. Information about reported household income asked participants to choose from three categories. Between (1)0 - \$999, (2)\$1,000 - \$1,999, and (3) \$2,000 or more. Participants were asked to choose from three different marital status categories: (1) In a domestic relationship, (2) Married, and (3) single or separated. Age was used as a continuous variable in the analysis.
+
+### Gender Norms
+
+Gender norms such as Machismo and Caballerismo were measured using *Machismo and Caballerismo* scale. A bi-dimensional scale validated to measure machismo and caballerismo. Items were measured on a 7-point scale ranging from 1 "Not at all" to 7 "Very much so". Measures were calculated by obtaining the mean values of sub scale score with a higher value indication greater affinity to gender norms.
+
+### Hispanic Stress
+
+The Hispanic stress was measured using a *Hispanic Stress inventory: Adolescent version* (HSI-A),a culturally informed psychosocial stress assessment instrument informed from previous Hispanic stress (Cervantes et al., 1991). the HSI-A is used to (a) evaluate culturally appropriate test items used to measure content specific life-stress events in adolescent Hispanic residing in the U.S and assess life-event stresors as well as identify unique immigration stresses that are specific to the acculturation process. The HSI-A is used to collect information about different domains in the adolescents life including immigration stress, communication and language stress, school and academic stress peer relationship stress, family stress and social economic stress. the HSI-A was administered as a 14-item questionnaire that consisted of questions such as "My parents are over protective", "My parents are to traditional" and "My parents want me to maintain their customs and traditions". the questionnaires were administered on a 10-point scale ranging from 1 - (Not likely) to 10 -(Most likely). Measures for the HSI-A were calculated by obtaining the raw mean values and dividing the total so in final analysis HSI-A scores ranged from 1 to 5 point range.
+
+### Alcohol Use
+
+Father Alcohol Use was measured using Time-Line Follow Back questionnaire. a semi-structured interview reporting participants last 90 day use. Holidays, birthdays or special events were used as anchoring events to help father participants remember their alcohol use between the 90 day interval. Standard serving drinks or quantity of alcobol was used to measure such as 12 oz of beer bottle being equivalent to 1 oz of a liquor short. Three drinking habits were measured to asses including in the final analysis such as drinking frequency, drinking quantity and binge dinker. Drink frequency was the total number of days a drink was consumed in the past 90 days ranging from 1 to 90. Binge drinking was recorded on weather on not the father indicated they had 5 or more drinkings on any occasion using a dichotomous scale (yes/no).
+
+# Statistical Analysis
+
+Descriptive statistics of variables used is shown in the previous sections. the sample mean, standard deviation, minimum, maximum, variance and skewness was used to describe continuous variables and counts was used to describe the categorical variables. We used a mixed linear effects modeling approach for predicting Hispanic adolescent stress using an identity link and Gaussian distribution approach with repeated measures and a random residual component to account for any variation to examine the association between our independent variables (machismo, caballerismo, family conflict, Americanism, Hispanicism) and controlled for demographic variables (age, parent marital status, semi-rural/urban, fathers years in the U.S. past month total income, total individuals in the household, adolescent being born in the U.S.) time of assessment was also controlled for as we hypothesized that there would be no differences between baseline and 6-month follow up results. Bivariate regression analysis models were used to assess final multiple linear mixed model. The Statistical Analysis System (SAS) 9.4 and R programming version 4.2.1 were used with a significance level of 0.05.
+
+\newpage
+
+## the last time we spoke
+
+chose which variables are possibly less than .1 or .2 to to drop in the final model. which include: Time point, americanism, and MACV_REL. These have been dropped and are not included in the final model below (i know we wanted to control for time of assessment as some point so its ok if we put it back in!!)
+
+![final model per bivariate analysis as of 2023-03-16](images/Screen%20Shot%202023-03-16%20at%208.34.19%20AM.png){fig-align="center"}
+
+this final model highlights all the demographic variables we are controlling for as well as variables of interest. Machismo and caballerismo FES conflict religion and control. this model is a little bit of a better fit than the model that does include time of assessment. We already noted that time of assessment was not significant in the bivariate analysis and its possible we will drop this variable since the p value was 0.64 in the bivariate analysis.
+
+# Table 1: Participants Baseline Characteristics
+
+```{r}
+#| echo: false
+#############################################################################################
+# Baseline charactersitcs from wide father youth data (continuous variables)##################
+#############################################################################################
+
+# mean of continuous variables 
+Baseline_char_mean <- Fathers_Youth_wide %>% 
+  summarise(across(c(numeric_age_first_interview_arm_1, Machismo_SS_first_interview_arm_1, Caballerismo_SS_first_interview_arm_1,HSI_Y_first_interview_arm_1, FES_COFLT_first_interview_arm_1,FES_RELIG_first_interview_arm_1, FES_CONTROL_first_interview_arm_1, BAS_Americanism_first_interview_arm_1, BAS_Hispanicism_first_interview_arm_1,MACV_RSP_first_interview_arm_1, MACV_REL_first_interview_arm_1, numeric_total_household_first_interview_arm_1), ~ mean(.x, na.rm = TRUE))) %>% rename(
+    `Age in Years`= numeric_age_first_interview_arm_1,
+    `Machismo` = Machismo_SS_first_interview_arm_1,
+    `Caballerismo` = Caballerismo_SS_first_interview_arm_1,
+    `HSI Youth`= HSI_Y_first_interview_arm_1,
+    `Family conflict` = FES_COFLT_first_interview_arm_1,
+    `Family religiosity` = FES_RELIG_first_interview_arm_1,
+    `Family control` = FES_CONTROL_first_interview_arm_1,
+    `Americanism` = BAS_Americanism_first_interview_arm_1,
+    `Hispanicism` = BAS_Hispanicism_first_interview_arm_1,
+    `MACV Respect`= MACV_RSP_first_interview_arm_1,
+    `MACV Religion` = MACV_REL_first_interview_arm_1,
+    `total indivials in household` = numeric_total_household_first_interview_arm_1
+    ) 
+
+#sd of continuous variables 
+Baseline_char_SD <- Fathers_Youth_wide %>% 
+  summarise(across(c(numeric_age_first_interview_arm_1, Machismo_SS_first_interview_arm_1, Caballerismo_SS_first_interview_arm_1,HSI_Y_first_interview_arm_1, FES_COFLT_first_interview_arm_1,FES_RELIG_first_interview_arm_1, FES_CONTROL_first_interview_arm_1, BAS_Americanism_first_interview_arm_1, BAS_Hispanicism_first_interview_arm_1,MACV_RSP_first_interview_arm_1, MACV_REL_first_interview_arm_1, numeric_total_household_first_interview_arm_1), ~ sd(.x, na.rm = TRUE))) %>% rename(
+    `Age in Years`= numeric_age_first_interview_arm_1,
+    `Machismo` = Machismo_SS_first_interview_arm_1,
+    `Caballerismo` = Caballerismo_SS_first_interview_arm_1,
+    `HSI Youth`= HSI_Y_first_interview_arm_1,
+    `Family conflict` = FES_COFLT_first_interview_arm_1,
+    `Family religiosity` = FES_RELIG_first_interview_arm_1,
+    `Family control` = FES_CONTROL_first_interview_arm_1,
+    `Americanism` = BAS_Americanism_first_interview_arm_1,
+    `Hispanicism` = BAS_Hispanicism_first_interview_arm_1,
+    `MACV Respect`= MACV_RSP_first_interview_arm_1,
+    `MACV Religion` = MACV_REL_first_interview_arm_1,
+    `total indivials in household` = numeric_total_household_first_interview_arm_1
+    )
+
+#median of continuous variables 
+Baseline_char_median <- Fathers_Youth_wide %>% 
+  summarise(across(c(numeric_age_first_interview_arm_1, Machismo_SS_first_interview_arm_1, Caballerismo_SS_first_interview_arm_1,HSI_Y_first_interview_arm_1, FES_COFLT_first_interview_arm_1,FES_RELIG_first_interview_arm_1, FES_CONTROL_first_interview_arm_1, BAS_Americanism_first_interview_arm_1, BAS_Hispanicism_first_interview_arm_1,MACV_RSP_first_interview_arm_1, MACV_REL_first_interview_arm_1, numeric_total_household_first_interview_arm_1), ~ median(.x, na.rm = TRUE))) %>% rename(
+    `Age in Years`= numeric_age_first_interview_arm_1,
+    `Machismo` = Machismo_SS_first_interview_arm_1,
+    `Caballerismo` = Caballerismo_SS_first_interview_arm_1,
+    `HSI Youth`= HSI_Y_first_interview_arm_1,
+    `Family conflict` = FES_COFLT_first_interview_arm_1,
+    `Family religiosity` = FES_RELIG_first_interview_arm_1,
+    `Family control` = FES_CONTROL_first_interview_arm_1,
+    `Americanism` = BAS_Americanism_first_interview_arm_1,
+    `Hispanicism` = BAS_Hispanicism_first_interview_arm_1,
+    `MACV Respect`= MACV_RSP_first_interview_arm_1,
+    `MACV Religion` = MACV_REL_first_interview_arm_1,
+    `total indivials in household` = numeric_total_household_first_interview_arm_1
+    )
+
+# minimum of continuous variables 
+Baseline_char_minimum <- Fathers_Youth_wide %>% 
+  summarise(across(c(numeric_age_first_interview_arm_1, Machismo_SS_first_interview_arm_1, Caballerismo_SS_first_interview_arm_1,HSI_Y_first_interview_arm_1, FES_COFLT_first_interview_arm_1,FES_RELIG_first_interview_arm_1, FES_CONTROL_first_interview_arm_1, BAS_Americanism_first_interview_arm_1, BAS_Hispanicism_first_interview_arm_1,MACV_RSP_first_interview_arm_1, MACV_REL_first_interview_arm_1, numeric_total_household_first_interview_arm_1), ~ min(.x, na.rm = TRUE))) %>% rename(
+    `Age in Years`= numeric_age_first_interview_arm_1,
+    `Machismo` = Machismo_SS_first_interview_arm_1,
+    `Caballerismo` = Caballerismo_SS_first_interview_arm_1,
+    `HSI Youth`= HSI_Y_first_interview_arm_1,
+    `Family conflict` = FES_COFLT_first_interview_arm_1,
+    `Family religiosity` = FES_RELIG_first_interview_arm_1,
+    `Family control` = FES_CONTROL_first_interview_arm_1,
+    `Americanism` = BAS_Americanism_first_interview_arm_1,
+    `Hispanicism` = BAS_Hispanicism_first_interview_arm_1,
+    `MACV Respect`= MACV_RSP_first_interview_arm_1,
+    `MACV Religion` = MACV_REL_first_interview_arm_1,
+    `total indivials in household` = numeric_total_household_first_interview_arm_1
+    )
+
+#maximum of continuous variables 
+
+Baseline_char_maximum <- Fathers_Youth_wide %>% 
+  summarise(across(c(numeric_age_first_interview_arm_1, Machismo_SS_first_interview_arm_1, Caballerismo_SS_first_interview_arm_1,HSI_Y_first_interview_arm_1, FES_COFLT_first_interview_arm_1,FES_RELIG_first_interview_arm_1, FES_CONTROL_first_interview_arm_1, BAS_Americanism_first_interview_arm_1, BAS_Hispanicism_first_interview_arm_1,MACV_RSP_first_interview_arm_1, MACV_REL_first_interview_arm_1, numeric_total_household_first_interview_arm_1), ~ max(.x, na.rm = TRUE))) %>% rename(
+    `Age in Years`= numeric_age_first_interview_arm_1,
+    `Machismo` = Machismo_SS_first_interview_arm_1,
+    `Caballerismo` = Caballerismo_SS_first_interview_arm_1,
+    `HSI Youth`= HSI_Y_first_interview_arm_1,
+    `Family conflict` = FES_COFLT_first_interview_arm_1,
+    `Family religiosity` = FES_RELIG_first_interview_arm_1,
+    `Family control` = FES_CONTROL_first_interview_arm_1,
+    `Americanism` = BAS_Americanism_first_interview_arm_1,
+    `Hispanicism` = BAS_Hispanicism_first_interview_arm_1,
+    `MACV Respect`= MACV_RSP_first_interview_arm_1,
+    `MACV Religion` = MACV_REL_first_interview_arm_1,
+    `total indivials in household` = numeric_total_household_first_interview_arm_1
+    )
+
+
+### for continuous variables pivot longing and merging variables into one table ---- 
+
+#mean long
+Baseline_char_mean_long <- Baseline_char_mean %>% 
+  pivot_longer(
+    cols = 1:12,
+    names_to = "variables",
+    values_to = "Mean"
+  ) 
+
+#median long 
+Baseline_char_median_long <- Baseline_char_median %>% 
+  pivot_longer(
+    cols = 1:12,
+    names_to = "variables",
+    values_to = "Median"
+  )
+
+# SD long
+Baseline_char_SD_long <- Baseline_char_SD %>% 
+  pivot_longer(
+    cols = 1:12,
+    names_to = "variables",
+    values_to = "SD"
+  ) 
+
+# min long
+
+Baseline_char_min_long <- Baseline_char_minimum %>% 
+  pivot_longer(
+    cols = 1:12,
+    names_to = "variables",
+    values_to = "Min"
+  ) 
+
+# max long 
+Baseline_char_max_long <- Baseline_char_maximum %>% 
+   pivot_longer(
+    cols = 1:12,
+    names_to = "variables",
+    values_to = "Max"
+  ) 
+
+
+# merging all cells into one cell for ease of reading ##### 
+
+
+Table_continuous <- 
+  left_join(Baseline_char_mean_long, Baseline_char_median_long, by = "variables") %>% 
+  left_join(Baseline_char_SD_long, by = "variables") %>% 
+  left_join(Baseline_char_min_long, by = "variables") %>% 
+  left_join(Baseline_char_max_long, by = "variables")
+
+
+# writing table for demograph variables 
+
+write_csv(
+  x = Table_continuous,
+  file = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/Table_continuous_values.csv"
+)
+
+
+
+#############################################################################################
+# Baseline charactersitcs from wide father youth data (categorical variables)#################
+#############################################################################################
+
+#parent marital status, count and percent 
+Baseline_char_parentmarital <- Fathers_Youth_wide %>% 
+  count(Parent_marital_status_first_interview_arm_1) %>% 
+  mutate(percent = (n/sum(n)))
+
+
+#born in the US? count and percent 
+Baseline_char_borninUS_Y <- Fathers_Youth_wide %>% 
+  count(US_born_first_interview_arm_1) %>% 
+  mutate(US_born_first_interview_arm_1 = case_when(
+    US_born_first_interview_arm_1 == 1 ~ "Yes",
+    US_born_first_interview_arm_1 == 0 ~ "No"
+  )) %>% 
+  mutate(percent = (n/sum(n))) 
+
+
+# language preference count and percent 
+ Baseline_char_LangPref <- Fathers_Youth_wide %>% 
+   count(Language_pref_first_interview_arm_1) %>% 
+   mutate(Language_pref_first_interview_arm_1 = case_when(
+     Language_pref_first_interview_arm_1 == 1 ~ "English",
+     Language_pref_first_interview_arm_1 == 2 ~ "Spanish",
+     Language_pref_first_interview_arm_1 == 3 ~ "Other"
+   )) %>% 
+ mutate(percent = (n/sum(n))) 
+ 
+ 
+ # Currently in school count and percent 
+ Baseline_char_currtSchool <- Fathers_Youth_wide %>% 
+   count(Currently_in_school_first_interview_arm_1) %>% 
+   mutate(Currently_in_school_first_interview_arm_1 = case_when(
+     Currently_in_school_first_interview_arm_1 == 1 ~ "Yes",
+     Currently_in_school_first_interview_arm_1 == 0 ~ "No"
+   )) %>% 
+   mutate(percent = (n/sum(n))) %>% view()
+
+# semi rural or urban count and percent 
+ Baseline_char_semiRUrb <- Fathers_Youth_wide %>% 
+   count(SemiRural_or_urban_first_interview_arm_1) %>%
+   mutate(SemiRural_or_urban_first_interview_arm_1 = case_when(
+     SemiRural_or_urban_first_interview_arm_1 == 1 ~ "Semi-Rural",
+     SemiRural_or_urban_first_interview_arm_1 == 2 ~ "Urban"
+   )) %>% 
+   mutate(percent = (n/sum(n))) %>% view()
+ 
+ 
+
+# past month total income count and percent (this includes NA values)
+ Baseline_char_PastMoth_incm <- Fathers_Youth_wide %>% 
+   count(Pastmonth_total_income_first_interview_arm_1) %>% 
+   mutate(Pastmonth_total_income_first_interview_arm_1 = case_when(
+     Pastmonth_total_income_first_interview_arm_1 == 1 ~ "0 - $999",
+     Pastmonth_total_income_first_interview_arm_1 == 2 ~ "$1000 - $1999",
+     Pastmonth_total_income_first_interview_arm_1 == 3 ~ "$2000 - or more"
+   )) %>% 
+   mutate(percent = (n/sum(n))) %>% view()
+ 
+ 
+ ## trying to merge long format categorical variables --------------------
+ 
+
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| output: false
+
+# making border
+
+#std_border_1 <- fp_border_default(
+  #color = "black",
+  #style = "solid",
+  #width = 1
+#)
+
+# important CSV of final table to turn into flextable 
+
+# import final table
+final_demographic_table <- read_csv("/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/final_demographic_table_ready2import.csv")
+
+# Selecting desired variables
+final_demographic_table <- final_demographic_table %>% 
+  select( Variable, `Mean (SD.)`, Median, Range) 
+
+# fixing table a bit
+final_demographic_table <- final_demographic_table %>% 
+  flextable() %>% 
+  theme_booktabs(bold_header = TRUE) %>% 
+  set_caption(caption = "Table 1: Youth Participants' baseine characteristics (N=122)") %>% 
+  autofit() %>% 
+  add_footer_lines("Note.SD. = Standard deviation") %>% 
+  hline(i = 12) %>% 
+  hline(i = 11) %>% 
+  bold(i = 12)
+ 
+final_demographic_table
+ 
+
+
+
+# exporting flextable 
+
+save_as_image(final_demographic_table,
+              path = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/tablepicture_Youth.png")
+
+
+# htmL - it keeps my title but idk why save image doesn't??? sad. 
+save_as_html(final_demographic_table,
+             path = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/tablepicture_YouthHTML.html")
+
+#print view table 
+
+
+#function to fit inside word doc
+print(final_demographic_table, preview = "pdf")
+
+
+FitFlextableToPage <- function(final_demographic_table, pgwidth = 6){
+
+  ft_out <- final_demographic_table %>% autofit()
+
+  ft_out <- width(ft_out, width = dim(ft_out)$widths*pgwidth /(flextable_dim(ft_out)$widths))
+  
+  return(ft_out)
+}
+
+
+
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| output: true
+
+final_demographic_table
+
+```
+
+# Father Demographic table
+
+```{r}
+#| echo: false
+#| message: false
+#| output: true
+
+Father_demoReady2export <- read_csv("/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/Father_demoReady2export.csv")
+
+
+# cleaning variables 
+
+Father_demoReady2export <- Father_demoReady2export  %>% 
+  select( Variable, `Mean (SD.)`, Median, Range)
+
+
+
+# doing flextable stuff 
+
+Father_demoReady2export <- Father_demoReady2export %>% 
+  flextable() %>% 
+  theme_booktabs(bold_header = TRUE) %>% 
+  set_caption(caption = "Table 2: Father Participants' Demographic Variables") %>% 
+  autofit() %>% 
+  add_footer_lines("Note.SD. = Standard deviation") %>% 
+  hline(i = 1) %>% 
+  bold(i = 2) %>% 
+  hline(i = 2)
+  
+
+Father_demoReady2export
+
+
+# doing screen shot png stuff to father demographic
+
+
+# doesnt work need to convert to html then conver to PDF, a little annoying for temp workaround
+
+save_as_image(Father_demoReady2export,
+              path = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/tablepicture_father.png")
+
+save_as_html(Father_demoReady2export,
+              path = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/tablepicture_fatherHTML.html")
+
+
+```
+
+# Fixing up bivariate vs. full model
+
+```{r}
+#| echo: false
+#| message: false
+#| output: true
+
+
+Bivariate_vs_full_chartfinal <- read_csv("/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/Bivariate_vs_full_chart_ready2import.csv")
+
+
+Bivariate_vs_full_chartfinal <- Bivariate_vs_full_chartfinal %>% 
+  select(Predictors, `Bivariate model`, `Full model`) %>% 
+  flextable() %>% 
+  theme_booktabs(bold_header = TRUE) %>% 
+  set_caption(caption = "Estimates for HSI-A outcome among Latinx teens living in urban and semirural areas of Miami-Dade County, Florida") %>% 
+  autofit() %>% 
+  add_footer_lines("*p<0.05; **p<0.01; ***p<0.001") %>% 
+  hline(i = 1) %>% 
+  bold(i = 1)
+  
+
+Bivariate_vs_full_chartfinal
+
+
+#applying function
+
+FitFlextableToPage(Bivariate_vs_full_chartfinal, pgwidth = 6)
+
+# taking a png of this chart 
+
+
+
+save_as_image(Bivariate_vs_full_chartfinal,
+              path = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/table_biVFull.png")
+
+
+
+# sav_ as _ image isnt saving title need to save as html 
+
+save_as_html(Bivariate_vs_full_chartfinal,
+              path = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/table_biVFullHTLM.html")
+```
+
+
+
+
