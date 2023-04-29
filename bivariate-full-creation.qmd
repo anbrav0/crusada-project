@@ -423,13 +423,6 @@ Descriptive statistics of variables used is shown in the previous sections. the 
 
 \newpage
 
-## the last time we spoke
-
-chose which variables are possibly less than .1 or .2 to to drop in the final model. which include: Time point, americanism, and MACV_REL. These have been dropped and are not included in the final model below (i know we wanted to control for time of assessment as some point so its ok if we put it back in!!)
-
-![final model per bivariate analysis as of 2023-03-16](images/Screen%20Shot%202023-03-16%20at%208.34.19%20AM.png){fig-align="center"}
-
-this final model highlights all the demographic variables we are controlling for as well as variables of interest. Machismo and caballerismo FES conflict religion and control. this model is a little bit of a better fit than the model that does include time of assessment. We already noted that time of assessment was not significant in the bivariate analysis and its possible we will drop this variable since the p value was 0.64 in the bivariate analysis.
 
 # Table 1: Participants Baseline Characteristics
 
