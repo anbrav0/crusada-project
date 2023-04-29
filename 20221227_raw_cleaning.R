@@ -3,31 +3,36 @@
 # last update: 2023-04-29
 
 
-# set up ##########
+# raw cleaning exploring data
+# Ana Bravo 
+# last update: 2023-04-29
+
+
+# set up ------------------------------------------------------------------------------
 library(haven)
 library(tidyverse)
 
 
-# bring .sav file into R using Haven ##########
+# bring .sav file into R using Haven ------------------------------------------------------------------------------
 HOMBRES_Y_subset <- haven::read_sav("raw_data/Hombres_Youth_Subset.sav", 
                                     encoding = "latin1")
 
 
-# Hombres .sav file of US born youth. Only includes baseline information #########
+# Hombres .sav file of US born youth. Only includes baseline information ---------------------------------------------
 HOMBRES_Youth_USborn_Baseline <- haven::read_sav("raw_data/Hombres Youth USborn Baseline.sav", 
                                                  encoding = "latin1")
 
-# writing R file into .csv file ######## 
+# writing R file into .csv file ------------------------------------------------------------------------------
 write_csv(x = HOMBRES_Y_subset, 
           file = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/raw_data/HOMBRES_Y_Raw.csv")
 
 
 
-# bringing in HOMBRES raw CSV #########
+# bringing in HOMBRES raw CSV ------------------------------------------------------------------------------
 HOMBRES_Y_Raw <- read_csv("raw_data/HOMBRES_Y_Raw.csv")
 
 
-## cleaning data - names ###########
+## cleaning data - names ------------------------------------------------------------------------------
 
 copy_HOMBRES_Y_subset <- HOMBRES_Y_Raw        # making copy of data
 
@@ -64,13 +69,6 @@ names(copy_HOMBRES_Y_subset) <-newnames        # pasting new names on copy HOMBR
 
 
 
-### dropping 1 parent variable in data set #####
-  ## Youth possibly identified as aparent mistakenly at the post follow up 
-  ## keep variable: last edit was 2023-01-12
-
-#clean_names_HOMBRES_Y <- copy_HOMBRES_Y_subset %>% 
-  #filter(Father_or_son != 1)
-
 
 
 ### removing Y variable ### 
@@ -95,7 +93,6 @@ clean_HOMBRES_Y_subset <- clean_HOMBRES_Y_subset %>%
 
 
 
-
 ## creating intervention/control numerical variable ####
 
 HOMBRES_Y_clean <- clean_HOMBRES_Y_subset %>% 
@@ -103,7 +100,7 @@ HOMBRES_Y_clean <- clean_HOMBRES_Y_subset %>%
   select(Redcap_event_name ,Participant_ID, Time_point, Group, Group_numerical, everything())
 
 
-### pivot wide HOMBRES #### 
+### pivot to wide data set ------------------------------------------------------------------------------
 HOMBRES_clean_wide <- HOMBRES_Y_clean %>% 
   select(-Time_point) %>% 
   pivot_wider(
@@ -116,7 +113,7 @@ HOMBRES_clean_wide <- HOMBRES_Y_clean %>%
   )
   
 
-# writing clean data set - wide format ##### 
+# writing clean data set - wide format ------------------------------------------------------------------------------
 
 write_csv(
   x = HOMBRES_clean_wide,
@@ -124,21 +121,21 @@ write_csv(
 )
 
 
-# writing clean data set - long format ####
+# writing clean data set - long format 
 
 write_csv(x = HOMBRES_Y_clean, 
           file = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/HOMBRES_Y_clean.csv")
 
 
 
-# writing copy HOMBRES #####
+# writing copy HOMBRES ------------------------------------------------------------------------------
 
 
 write_csv(x = copy_HOMBRES_Y_subset, 
           file = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/HOMBRES_Y_clean_copy.csv")
 
 
-###### IGNORE ########
+some table prep ------------------------------------------------------------------------------
 
 # table prep 
 table_1 <- 
@@ -156,7 +153,7 @@ table_1 <-
   )
 
 
-# subset for table
+# subset for table -------------------------------------------------------------------------
 
 table_subset <- subset_YRBS_2019 %>% 
   select(Sex, 
@@ -168,7 +165,7 @@ table_subset <- subset_YRBS_2019 %>%
          Q45
   )
 
-#actual table 
+#actual table ------------------------------------------------------------------------------
 
 gtsummary::set_gtsummary_theme(table_1)
 
@@ -206,17 +203,19 @@ new_copy_hombres_youth <- read_csv("raw_data/new_copy_hombres_youth_toR.csv")
 # unique(HOMBRES_Y_subset[,"acaseid"])
 
 
-# writing US born into csv file ###############################################
+# writing US born into csv file ------------------------------------------------------------------------------
+
 write_csv(x = HOMBRES_Youth_USborn_Baseline, 
          file = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/raw_data/HOMBRES_Youth_USborn_Baseline.csv")
 
 
-### bring in US born ###########################################################
+### bring in US born ------------------------------------------------------------------------------
+
 HOMBRES_Youth_USborn_Baseline <- read_csv("raw_data/HOMBRES_Youth_USborn_Baseline.csv")
 
 
 
-### fixing variable name to match SAS data #####################################
+### fixing variable name to match SAS data ----------------------------------------------------
 
 names(HOMBRES_Youth_USborn_Baseline) <- NULL 
 
@@ -226,10 +225,10 @@ new_USborn_names <- c(
 )
 
 
-names(HOMBRES_Youth_USborn_Baseline) <-new_USborn_names
 
 
-###### attempt to join data sets (first attempt) ##############################
+
+# attempt to join data sets (first attempt) --------------------------------------------------------
 
 HOMBRES_joined_USborn <- left_join(
   new_copy_hombres_youth,
@@ -251,14 +250,14 @@ HOMBRES_joined_USborn_forSAS <-
 
 
 
-#### organizing variables for final transfer to SAS ###########################
+## organizing variables for final transfer to SAS -----------------------------------------
 
 HOMBRES_joined_USborn_forSAS <- HOMBRES_joined_USborn_forSAS %>% 
   select(Redcap_event_name, Participant_ID, Father_or_son, Language_pref, 
          Currently_in_school, US_born, Time_point,everything()) 
 
 
-#### write SAS/ or CSV ########################################################
+# write SAS/ or CSV ----------------------------------------------------------------------------
 write_sas(HOMBRES_joined_USborn_forSAS, 
           path = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/HOMBRES_joined_USborn_forSAS.sas7bdat")
 
@@ -268,14 +267,14 @@ write_csv(
   file = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/HOMBRES_joined_USborn.csv"
 )
 
-####### changing martial status to numerical values if needed ##################
+# changing martial status to numerical values if needed ------------------------------------------
 
 
 
 HOMBRES_joined_USborn <- read_csv("clean_data/HOMBRES_joined_USborn.csv")
 
 
-## checking values of variable parent martital status ######
+# checking values of variable parent martital status  --------------------------------------------------
 unique(HOMBRES_joined_USborn$Parent_marital_status)
 
 
@@ -288,7 +287,7 @@ HOMBRES_joined_USborn %>%
 
 ###############################################################################
 ######## Updated and cleaning on new data based on feedback given on:##########
-################## 2/2/2023 ###################################################
+################## ############2/2/2023 #######################################
 
 
 HOMBRES_joined_USborn <- read_csv("clean_data/HOMBRES_joined_USborn.csv")
@@ -297,7 +296,7 @@ HOMBRES_Father_prepost <- haven::read_sav("raw_data/Hombres Father selected vars
                                           encoding = "latin1")
 
 
-#### transferring fixed variables to post time point for correct analysis #######
+# transferring fixed variables to post time point for correct analysis ------------------------------------
 
 HOMBRES_Youth_fixed <- HOMBRES_joined_USborn %>% 
   group_by(Participant_ID) %>% 
@@ -310,7 +309,7 @@ HOMBRES_Youth_fixed <- HOMBRES_joined_USborn %>%
 
 
 
-### changing variable Time_point to Time in youth data ###########
+# changing variable Time_point to Time in youth data ------------------------------------------
 
 HOMBRES_Youth_fixed <- HOMBRES_Youth_fixed %>% 
   rename(Time = Time_point) %>% 
@@ -319,7 +318,7 @@ HOMBRES_Youth_fixed <- HOMBRES_Youth_fixed %>%
 
 
 
-######## export data ######
+#export data ----------------------------------------------------------------------------------
 
 
 
@@ -330,7 +329,7 @@ write_csv(
 
 
 
-###### Fixing variables in Father data set ################################### 
+# Fixing variables in Father data set ---------------------------------------------------------------------
 
 
 names(HOMBRES_Father_prepost) <- NULL
@@ -359,7 +358,7 @@ HOMBRES_Father_cleanNames <- read_csv("raw_data/HOMBRES_Father_Raw.csv")
 ########### cleaning Father Participant ID variables ###########################
 
 
-#### switching From F variable to Y variable ###################################
+# switching From F variable to Y variable ------------------------------------------------------------
 
 HOMBRES_Father_cleanNames <- HOMBRES_Father_cleanNames %>% 
   mutate(Participant_ID = str_replace_all(
@@ -369,7 +368,7 @@ HOMBRES_Father_cleanNames <- HOMBRES_Father_cleanNames %>%
     ))
 
 
-### preparing to join Father dad with youth data set #########################
+# preparing to join Father dad with youth data set --------------------------------------------------
 
 
 ### maybe subsetting the data first for youth###
@@ -379,6 +378,7 @@ HOMBRES_Youth_subset <- HOMBRES_Youth_fixed %>%
 
 
 ### trying to merge youth subset to father data##### 
+
 Youth_Father_subset <- left_join(
   HOMBRES_Father_cleanNames,
   HOMBRES_Youth_subset,
@@ -387,7 +387,7 @@ Youth_Father_subset <- left_join(
   select(Participant_ID, Time, HSI_Y, everything()) 
 
 
-### trying to merge some father significant variables with Youth subset #####
+###trying to merge some father significant variables with Youth subset #####
 
 Youth_Father_second_subset <- left_join(
   HOMBRES_Father_cleanNames,
@@ -399,7 +399,7 @@ Youth_Father_second_subset <- left_join(
 
 
 
-### exporting new data set with father years in the US ######################
+# exporting new data set with father years in the US -----------------------------------------------
 
 write_csv(x = Youth_Father_second_subset,
           file = "/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/Father_Youth_second_subset.csv")
@@ -407,7 +407,7 @@ write_csv(x = Youth_Father_second_subset,
 
 
 
-########### exporting the new subset data of youth and father info ###########
+# exporting the new subset data of youth and father info ---------------------------------------------
 
 
 
@@ -418,8 +418,7 @@ write_csv(x = Youth_Father_subset,
 
 
 
-
-## pivot wide youth to merge? ##### 
+# pivot wide youth to merge? ------------------------------------------------------------------------------
 
 #HOMBRES_Youth_wide <- HOMBRES_Youth_fixed %>% 
  # select(-Time_point) %>% 
@@ -432,19 +431,3 @@ write_csv(x = Youth_Father_subset,
     #numeric_current_grade, Machismo_SS)
     
  # )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
