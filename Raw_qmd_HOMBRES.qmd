@@ -23,7 +23,7 @@ library(tidyverse)
 #| message: false
 #| echo: false
 
-copy_clean_HOMBRES_Y <- read_csv("/Users/anbravo/OneDrive/FIU Related/Graduate/MPH Biostatistics/CRUSADA/clean_data/HOMBRES_Y_clean_copy.csv")
+
 ```
 
 ```{r}
