@@ -1,0 +1,144 @@
+#' Notes
+#' 1. Organized the code into functions or separate code blocks to improve readability and maintainability.
+#' 2. Attempted to modularize repeated tasks.
+#' 3. Avoided hardcoded paths when possible.
+#' 4. Parameterized inputs and added some error handling.
+
+# Load required packages
+library(haven)
+library(tidyverse)
+
+# Define file paths
+rawDataDir <- "raw_data/"
+cleanDataDir <- "clean_data/"
+
+# Define file names
+youthSubsetFile <- "Hombres_Youth_Subset.sav"
+usBornBaselineFile <- "Hombres Youth USborn Baseline.sav"
+youthRawCsvFile <- "HOMBRES_Y_Raw.csv"
+youthCleanCsvFile <- "HOMBRES_Y_clean.csv"
+youthCleanWideCsvFile <- "HOMBRES_Y_clean_wide.csv"
+
+# Function to read .sav files
+readSavFile <- function(filePath) {
+  haven::read_sav(file.path(rawDataDir, filePath), encoding = "latin1")
+}
+
+# Function to write CSV files
+writeCsvFile <- function(data, filePath) {
+  write_csv(x = data, file.path(cleanDataDir, filePath))
+}
+
+# Set up data cleaning process
+set_up <- function() {
+  # Bring .sav files into R using Haven
+  HOMBRES_Y_subset <- readSavFile(youthSubsetFile)
+  HOMBRES_Youth_USborn_Baseline <- readSavFile(usBornBaselineFile)
+  
+  # Write R file into .csv file
+  writeCsvFile(HOMBRES_Y_subset, youthRawCsvFile)
+  
+  # Read HOMBRES raw CSV
+  HOMBRES_Y_Raw <- read_csv(file.path(rawDataDir, youthRawCsvFile))
+  
+  return(HOMBRES_Y_Raw)
+}
+
+# Clean variable names
+clean_names <- function(data) {
+  copy_HOMBRES_Y_subset <- data
+  
+  names(copy_HOMBRES_Y_subset) <- NULL
+  
+  newnames <- c("Redcap_event_name", "Participant_ID", "Father_or_son", "Language_pref",
+                "Total_household_n", "Age_at_baseline", "Currently_in_school", "Current_grade",
+                "Time_point", "MACV_RSP", "MACV_REL", "Machismo_SS", "Caballerismo_SS", "HSI_Y",
+                "FES_COFLT", "FES_RELIG", "FES_CONTROL", "BAS_Americanism", "BAS_Hispanicism",
+                "SemiRural_or_urban", "Group", "Parent_marital_status", "Pastmonth_total_income")
+  
+  names(copy_HOMBRES_Y_subset) <- newnames
+  
+  return(copy_HOMBRES_Y_subset)
+}
+
+# Convert Participant ID to numeric
+convert_Participant_ID <- function(data) {
+  data$Participant_ID <- as.numeric(data$Participant_ID)
+  return(data)
+}
+
+# Drop Redcap_event_name variable
+drop_Redcap_event_name <- function(data) {
+  data <- data %>%
+    select(-Redcap_event_name, everything())
+  return(data)
+}
+
+# Create Group_numerical variable
+create_Group_numerical <- function(data) {
+  data <- data %>%
+    mutate(Group_numerical = ifelse(Group == "C", 0, 1)) %>%
+    select(Redcap_event_name, Participant_ID, Time_point, Group, Group_numerical, everything())
+  return(data)
+}
+
+# Pivot data to wide format
+pivot_wide <- function(data) {
+  HOMBRES_clean_wide <- data %>%
+    select(-Time_point) %>%
+    pivot_wider(
+      names_from = Redcap_event_name,
+      values_from = c(Group, Group_numerical, Father_or_son, Language_pref, Total_household_n,
+                      Age_at_baseline, Currently_in_school, Current_grade, MACV_RSP, MACV_REL,
+                      Machismo_SS, Caballerismo_SS, HSI_Y, FES_COFLT, FES_RELIG, FES_CONTROL,
+                      BAS_Americanism, BAS_Hispanicism, SemiRural_or_urban, Parent_marital_status,
+                      Pastmonth_total_income)
+    )
+  
+  return(HOMBRES_clean_wide)
+}
+
+# Perform data cleaning
+clean_data <- function() {
+  # Set up data
+  HOMBRES_Y_Raw <- set_up()
+  
+  # Clean variable names
+  copy_clean_HOMBRES_Y <- clean_names(HOMBRES_Y_Raw)
+  
+  # Remove Y variable
+  copy_clean_HOMBRES_Y <- copy_clean_HOMBRES_Y %>%
+    mutate(Participant_ID = str_remove_all(Participant_ID, "[A-Z]"))
+  
+  # Convert Participant ID to numeric
+  copy_clean_HOMBRES_Y <- convert_Participant_ID(copy_clean_HOMBRES_Y)
+  
+  # Drop Redcap_event_name variable
+  clean_HOMBRES_Y_subset <- drop_Redcap_event_name(copy_clean_HOMBRES_Y)
+  
+  # Create Group_numerical variable
+  HOMBRES_Y_clean <- create_Group_numerical(clean_HOMBRES_Y_subset)
+  
+  # Pivot data to wide format
+  HOMBRES_clean_wide <- pivot_wide(HOMBRES_Y_clean)
+  
+  # Write clean data files
+  writeCsvFile(copy_clean_HOMBRES_Y, "HOMBRES_Y_clean_copy.csv")
+  writeCsvFile(HOMBRES_Y_clean, youthCleanCsvFile)
+  writeCsvFile(HOMBRES_clean_wide, youthCleanWideCsvFile)
+}
+
+# Error handling for file operations
+handle_file_errors <- function(expr) {
+  tryCatch(expr, error = function(e) {
+    message(paste("Error:", e$message))
+  })
+}
+
+# Main function to execute the data cleaning process
+main <- function() {
+  handle_file_errors(clean_data)
+}
+
+# Execute the main function
+main()
